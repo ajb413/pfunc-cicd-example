@@ -1,0 +1,23 @@
+language: node_js
+
+node_js:
+  - "7"
+
+## Install the CLI and login to PubNub using Travis secrets you set
+before_script:
+  - npm install -g pubnub-cli
+  - pubnub-cli login -m $emailaddress -p $password
+  - pubnub-cli init -b 30414 -k 455019 -a 445818
+
+## Test
+script:
+  - pubnub-cli test -b 30414 -k 455019 -a 445818
+
+## Only deploy if this is a master commit
+## Also only if this is a push and not a pull-request opening
+deploy:
+  provider: script
+  script: pubnub-cli push -b 30414 -k 455019 -a 445818
+  on: 
+    branch: master
+    condition: $TRAVIS_EVENT_TYPE = push
