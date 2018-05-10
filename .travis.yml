@@ -16,6 +16,7 @@ script:
 ## Only deploy if this is a master commit
 ## Also only if this is a push and not a pull-request opening
 deploy:
+  skip_cleanup: true
   provider: script
   script: pubnub-cli push -b 30414 -k 455019 -a 445818
   on: 
